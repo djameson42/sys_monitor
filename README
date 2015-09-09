@@ -1,0 +1,50 @@
+This project comprises of two parts, the system monitor that runs on your 
+computer and the part that runs on your arduino. The system monitor 
+communicates via UART over USB to the arduino which displays the received 
+characters on the lcd (HD44780 compatible) screen.
+
+To configure the system monitor:
+	
+	open monitor/sys_monitor.c, and adjust
+
+	TTY_FILE - The device file corresponding to your arduino
+	TIME_DELAY - The number of seconds between each probe
+	BAUD - The baud rate (see termios.h for available options)
+
+To configure the arduino:
+	
+	open arduino_display/arduino_display.c, and adjust
+
+	BAUD			The baud rate (same as sys_monitor.c)
+	F_CPU			The clock frequency of your MCU in Hz
+
+	open arduino_display/lcd_driver.h, and adjust
+
+	D0_PORT - D7_PORT	The port the corresponding data pins sits on 
+	D0_PIN - D7_PIN		The pin number 
+	EN_PORT			The port the enable pin sits on 
+	EN_PIN			The pin number for the enable wire
+	RW_PORT			The port the read/write pin sits on
+	RW_PIN			The pin number for the read/write wire 
+	RS_PORT			The port the register select pin sits on
+	RS_PIN			The pin number for the register/select wire
+
+	open arduino_display/Makefile, and adjust
+
+	MCU			The name of your atmel micro-controller
+	F_CPU			The clock frequency of your MCU in Hz
+	PORT			The device file corresponding to your arduino
+	PART			The name of your atmel micro-controller (caps)
+
+To build the system monitor run
+	make monitor/Makefile
+
+To build the arduino program run
+	make arduino_display/Makefile
+
+Then upload the ihex file to the ardunio with 
+	make arduino_display/upload
+
+You can now start the system monitor with ./monitor/sys_monitor and after the
+TIME_DELAY you specified in monitor/sys_monitor.c the results should appear 
+on the lcd screen connected to your ardunio. 
