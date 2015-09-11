@@ -1,7 +1,7 @@
 RM=rm
 CC=gcc
 PROG=sys_monitor
-CFLAGS=-Wall -g
+CFLAGS=-Wall
 OBJECTS=${PROG} ${PROG}.o hw_monitor.o
 
 ${PROG}: ${PROG}.o hw_info.o
